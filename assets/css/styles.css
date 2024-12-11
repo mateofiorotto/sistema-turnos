@@ -1,0 +1,158 @@
+/*GENERALES*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  display: none;
+}
+
+h2 {
+  font-weight: bold !important;
+  text-transform: uppercase;
+}
+
+section {
+  padding: 3em;
+}
+
+i span {
+  font-size: 0;
+}
+
+/*404*/
+#error-404 {
+  width: 90%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+}
+
+/*REGISTER / LOGIN*/
+form input {
+  border-radius: 0.3em;
+  padding: 0.5em;
+  outline: 2px solid #C4A484;
+  transition: 0.2s ease-in-out all;
+  border: none !important;
+  width: 100% !important;
+  margin-bottom: 2.5em;
+}
+
+form input:focus {
+  outline: 2px solid #98D9A3 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+form label {
+  margin-bottom: 0.75em;
+}
+
+form button {
+  width: 25%;
+  padding: 1em 2em;
+  border: none;
+  background-color: #498a54;
+  border-radius: 1em;
+  color: white;
+  font-weight: bold;
+}
+
+.disclaimer-form {
+  font-size: 0.8em;
+  margin-left: 0.8em;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+/*TURNOS*/
+
+.all-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-container {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 35px;
+  padding: 0 1em;
+  margin-top: 2em;
+}
+
+.header-turno {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  aign-items: center;
+  padding: 10px;
+}
+.header-display {
+  display: flex;
+  align-items: center;
+}
+
+.header-display p {
+  color: #0041ff;
+  margin: 5px;
+  font-size: 1.2rem;
+  word-spacing: 0.5rem;
+}
+
+pre {
+  padding: 10px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #0041ff;
+}
+
+.days,
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: auto;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.week div,
+.days div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 3em;
+  border-radius: 100%;
+}
+.days div:hover {
+  background: #ebedf0;
+  color: rgb(25, 25, 201);
+  cursor: pointer;
+}
+.week div {
+  opacity: 0.5;
+}
+.current-date {
+  background-color: #0041ff;
+  color: #fff;
+}
+.display-selected {
+  margin-bottom: 10px;
+  padding: 20px 20px;
+  text-align: center;
+}
+
+.selected-date {
+  background-color: #0041ff;
+  color: #fff;
+  border-radius: 50%;
+}
