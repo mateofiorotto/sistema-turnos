@@ -63,7 +63,7 @@ class Autenticacion
                     return TRUE;
                 } else {
                     Alerta::anadir_alerta('danger', "No tiene permisos para acceder a esta sección. Inicia como Administrador.");
-                    header('location: index.php?seccion=login');
+                    header('location: ../index.php?seccion=login');
                 }
 
             } else {
@@ -72,7 +72,7 @@ class Autenticacion
             }
 
         } else {
-            Alerta::anadir_alerta('danger', "Entra en tu cuenta para sacar turnos.");
+            Alerta::anadir_alerta('warning', "Entra en tu cuenta para acceder a esta sección.");
             header("location: index.php?seccion=login");
         }
     }

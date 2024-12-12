@@ -3,9 +3,30 @@
 class Turno
 {
     private $id;
+    private $id_usuario;
     private $fecha_turno;
     private $creacion;
 
+    /**
+     * Devuelve el listado de turnos completo
+     * 
+     * @return Turno[] Un array de objetos Turno
+     */
+    public static function listado_de_turnos(): array
+    {
+        $conexion = Conexion::getConexion();
+        $query = "SELECT t.*, u.*
+                  FROM turnos AS t INNER JOIN usuarios u
+                  ORDER BY fecha_turno ASC";
+
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute();
+
+        $lista_turnos = $PDOStatement->fetchAll();
+
+        return $lista_turnos;
+    }
 
     /**
      * Inserta una nuevo turno en la BD
@@ -95,6 +116,26 @@ class Turno
     public function setCreacion($creacion)
     {
         $this->creacion = $creacion;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_usuario
+     */ 
+    public function getId_usuario()
+    {
+        return $this->id_usuario;
+    }
+
+    /**
+     * Set the value of id_usuario
+     *
+     * @return  self
+     */ 
+    public function setId_usuario($id_usuario)
+    {
+        $this->id_usuario = $id_usuario;
 
         return $this;
     }

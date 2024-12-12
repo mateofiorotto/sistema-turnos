@@ -1,4 +1,3 @@
-
 let userIcon = document.getElementById("user-icon");
 let dropDownUser = document.getElementById("dropdown-user");
 

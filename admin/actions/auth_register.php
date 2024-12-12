@@ -16,7 +16,11 @@ try {
     
     Alerta::anadir_alerta('success', "Tu cuenta fue creada. <a href='index.php?seccion=login'>Iniciar Sesión</a>.");
 } catch (Exception $e) {
-    Alerta::anadir_alerta('danger', "Tu cuenta no se pudo crear. Reintentalo.");
+    if($e->getCode()  == 23000){
+        Alerta::anadir_alerta('danger', "Ya existe una persona con ese usuario. Reintentalo.");
+    }else{
+        Alerta::anadir_alerta('danger', "La cuenta no se pudo crear. Ponete en contacto mediante nuestro mail.");
+    }
 }
 header('Location: ../../index.php?seccion=register');
 ?>

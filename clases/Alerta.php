@@ -48,11 +48,34 @@ class Alerta
 
     private static function mostrar_alerta($alerta): string
     {
-        $html = "<div class='mb-5 alert alert-{$alerta['tipo']} alert-dismissible fade show' role='alert'>";
-        $html .= $alerta['mensaje'];
-        $html .= "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-        $html .= "</div>";    
-
-        return $html;
+        $script = "";
+    
+        if ($alerta['tipo'] == 'success') {
+            $script = "<script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: '{$alerta['mensaje']}'
+                        });
+                    </script>";
+        } elseif ($alerta['tipo'] == 'danger') {
+            $script = "<script>
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '{$alerta['mensaje']}'
+                        });
+                    </script>";
+        } elseif ($alerta['tipo'] == 'warning') {
+            $script = "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Aviso',
+                            text: '{$alerta['mensaje']}'
+                        });
+                    </script>";
+        }
+    
+        return $script;
     }
 }

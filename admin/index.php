@@ -1,16 +1,24 @@
 <?php
-require_once "funciones/autoload.php";
+require_once "../funciones/autoload.php";
 
-$seccion = isset($_GET['seccion']) ? $_GET['seccion'] : 'inicio';
+$idUser = $_SESSION['loggedIn']['id'] ?? FALSE;
+
+$usuario = Usuario::usuario_por_id($idUser);
+
+$seccion = isset($_GET['seccion']) ? $_GET['seccion'] : 'turnos';
 
 $secciones_validas = [
     '404' => [
         'titulo' => 'Pagina no encontrada | CALI',
-        'restringido' => 0,
+        'restringido' => 2,
     ],
     'turnos' => [
-        'titulo' => "Inicio | CALI",
+        'titulo' => "Turnos pendientes | CALI",
         'restringido' => 2,
+    ],
+    'login' => [
+        'titulo' => "Iniciar sesión | CALI",
+        'restringido' => 0,
     ],
 ];
 
@@ -45,9 +53,13 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
     <meta property="og:image" content="URL_to_image">
     <meta property="og:url" content="Your website URL">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/javascript/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </script>
     <title><?= $secciones_validas[$vista]['titulo'] ?></title>
 </head>
 
@@ -66,30 +78,31 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
 
                     <ul class="navbar-nav mx-auto gap-4 align-middle justify-content-center align-items-center">
                         <li><a class="navbar-brand" href="#">Navbar</a></li>
-                        <li class="nav-item">
-                            <a class="<?php if ($secciones_validas[$vista]['titulo'] == 'inicio') {
-                                            echo "inicio";
-                                        } ?>nav-link active" aria-current="page" href="index.php?seccion=inicio">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php?seccion=turnos">Turnos</a>
-                        </li>
-                        <?php
-                            if ($userData) {
-                            ?>
+                        
+                            <?php if ($userData) {
+                                if ($userData['rol'] == 'admin'){ ?>
+            
+                                    <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="../index.php?seccion=inicio">Página principal</a>
+                                    </li>
+            
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.php?seccion=turnos">Turnos</a>
+                                    </li>
+                            <?php } ?>
                         <!-- dropdown -->
                         <li class="nav-item">
-                            <a id="user-icon" class="nav-link" href="#"><i class="fa-solid fa-user"><span>Icono usuario</span></i></a>
+                            <a id="user-icon" class="nav-link" href="#"><i class="me-2 fa-solid fa-user"><span>Icono usuario</span></i><?= $usuario->getNombre_completo(); ?></a>
                             
                                 <ul class="d-none position-absolute" id="dropdown-user">
                                     <li>Login</li>
                                     <li>Login</li>
                                 </ul>
                         </li>
-                        <li><a id="login-icon" class="nav-link" href="admin/actions/auth_logout.php"><i class="me-2 fa-solid fa-right-from-bracket"><span>Icono Salir</span></i>Salir</a></li>
+                        <li><a id="login-icon" class="nav-link" href="actions/auth_logout.php"><i class="me-2 fa-solid fa-right-from-bracket"><span>Icono Salir</span></i>Salir</a></li>
                             
                         <?php } else { ?>
-                            <li><a id="login-icon" class="nav-link" href="index.php?seccion=register"><i class="me-2 fa-solid fa-pen-to-square"><span>Icono Registro</span></i>Registrarse</a></li>
+                            <li><a id="login-icon" class="nav-link" href="../index.php?seccion=register"><i class="me-2 fa-solid fa-pen-to-square"><span>Icono Registro</span></i>Registrarse</a></li>
 
                             <li><a id="login-icon" class="nav-link" href="index.php?seccion=login"><i class="me-2 fa-solid fa-right-to-bracket"><span>Icono Login</span></i>Iniciar Sesión</a></li>
                         <?php } ?>
@@ -110,8 +123,6 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
     <footer class="">
         <p>footer</p>
     </footer>
-    <script src="assets/javascript/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>
