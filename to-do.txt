@@ -1,14 +1,11 @@
-ULTIMO:
-chequear codigo valido y headers + seo
-aos 
-styles 
-
-Ante ULTIMO
-recuperar contraseña --> hay que agregar mail creeria
-perfil user (nav y funcionalidad)
-confirm pw
-
-Ver si puedo hacer aparecer todos los errores en la alerta y guardar campos anteriores
-
-flatpickr deshabilitar dias feriados y findes y x horas (fixear js error horas incorrectas) 
-Y QUE NO SE PUEDA PEDIR TURNO EN EL MISMO DIA
+- validate code, headers and SEO / chequear codigo valido, headers y SEO
+- aos (library)
+- styles 
+- recover password / recuperar contraseña
+- profile user / perfil de usuario
+- confirm password
+- complete alerts (all errors) / completar alertas (todos los errores)
+- recover info of all correct fields in forms / recuperar info de campos correctos en los form
+- flatpickr: disable current day, holidays days and weekends / deshabilitar dia actual, feriados y fin de semanas
+- flatpickr: fix all errors in console / solucionar errores de consola
+- change shifts (edit) / cambiar turnos (editar)
