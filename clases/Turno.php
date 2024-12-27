@@ -6,21 +6,25 @@ class Turno
     private $id_usuario;
     private $fecha_turno;
     private $creacion;
-
     /**
      * Devuelve el listado de turnos completo
      * 
      * @return Turno[] Un array de objetos Turno
      */
-    public static function listado_de_turnos(): array
+    
+    public static function listado_de_turnos(string $hoy): array
     {
+        
+
         $conexion = Conexion::getConexion();
-        $query = "SELECT t.*, u.*
-                  FROM turnos AS t INNER JOIN usuarios u
-                  ORDER BY fecha_turno ASC";
+        $query = "SELECT t.id, t.id_usuario, t.fecha_turno, t.creacion 
+                  FROM turnos AS t INNER JOIN usuarios AS u
+                  WHERE t.id_usuario = u.id AND fecha_turno >= :hoy
+                  ORDER BY t.fecha_turno ASC";
 
         $PDOStatement = $conexion->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->bindParam(':hoy', $hoy);
         $PDOStatement->execute();
 
         $lista_turnos = $PDOStatement->fetchAll();
@@ -46,7 +50,7 @@ class Turno
         ]);
     }
 
-    public static function comprobarTurno($fecha_turno){
+    public static function comprobar_turno(string $fecha_turno){
         $conexion = Conexion::getConexion();
 
         $query = "SELECT COUNT(*) FROM turnos WHERE fecha_turno = :fecha_turno";
@@ -59,6 +63,45 @@ class Turno
         return $resultado > 0;
 }
 
+    public static function turnos_usuario(int $idUser, $hoy) {
+        $conexion = Conexion::getConexion();
+        $query = "SELECT *
+                  FROM turnos AS t
+                  WHERE t.id_usuario = $idUser AND fecha_turno >= :hoy
+                  ORDER BY t.fecha_turno ASC";
+
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->bindParam(':hoy', $hoy);
+        $PDOStatement->execute();
+
+        $lista_turnos = $PDOStatement->fetchAll();
+
+        return $lista_turnos;
+    }
+
+    public static function turno_por_id(int $idTurno): ?Turno
+    {
+        $conexion = Conexion::getConexion();
+        $query = "SELECT * FROM turnos WHERE id = ?";
+
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute([$idTurno]);
+
+        $turno = $PDOStatement->fetch();
+
+        return $turno ?: null;
+    }
+
+    public function delete()
+    {
+        $conexion = Conexion::getConexion();
+        $query = "DELETE FROM turnos WHERE id = ?";
+
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->execute([$this->id]);
+    }
 
     /**
      * Get the value of id

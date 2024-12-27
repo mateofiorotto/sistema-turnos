@@ -1,9 +1,14 @@
+ULTIMO:
+chequear codigo valido y headers + seo
 aos 
-styles
-backend --> listado de turnos, btn wsp, vista eliminar x turnos
+styles 
 
+Ante ULTIMO
 recuperar contraseña --> hay que agregar mail creeria
 perfil user (nav y funcionalidad)
 confirm pw
 
-flatpickr deshabilitar dias feriados y findes y x horas
+Ver si puedo hacer aparecer todos los errores en la alerta y guardar campos anteriores
+
+flatpickr deshabilitar dias feriados y findes y x horas (fixear js error horas incorrectas) 
+Y QUE NO SE PUEDA PEDIR TURNO EN EL MISMO DIA

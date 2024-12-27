@@ -13,7 +13,7 @@ $secciones_validas = [
         'restringido' => 2,
     ],
     'turnos' => [
-        'titulo' => "Turnos pendientes | CALI",
+        'titulo' => "Agenda | CALI",
         'restringido' => 2,
     ],
     'login' => [
@@ -42,24 +42,16 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Your website description here.">
-    <meta name="keywords" content="keyword1, keyword2, keyword3">
-    <meta name="author" content="Your Name">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Your Open Graph Title">
-    <meta property="og:description" content="Your Open Graph Description">
-    <meta property="og:image" content="URL_to_image">
-    <meta property="og:url" content="Your website URL">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/javascript/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </script>
     <title><?= $secciones_validas[$vista]['titulo'] ?></title>
 </head>
 
@@ -77,17 +69,17 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
                 <div class="collapse navbar-collapse" id="navbarNav">
 
                     <ul class="navbar-nav mx-auto gap-4 align-middle justify-content-center align-items-center">
-                        <li><a class="navbar-brand" href="#">Navbar</a></li>
+                        <li><a class="navbar-brand" href="../index.php?seccion=inicio">Navbar</a></li>
                         
                             <?php if ($userData) {
                                 if ($userData['rol'] == 'admin'){ ?>
             
                                     <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="../index.php?seccion=inicio">Página principal</a>
+                                    <a class="nav-link active" aria-current="page" href="../index.php?seccion=inicio"><i class="me-2 fa-solid fa-home"><span>Icono Inicio</span></i>Página principal</a>
                                     </li>
             
                                     <li class="nav-item">
-                                        <a class="nav-link" href="index.php?seccion=turnos">Turnos</a>
+                                        <a class="nav-link" href="index.php?seccion=turnos"><i class="me-2 fa-solid fa-calendar-days"><span>Icono Inicio</span></i>Agenda</a>
                                     </li>
                             <?php } ?>
                         <!-- dropdown -->
@@ -123,6 +115,7 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
     <footer class="">
         <p>footer</p>
     </footer>
+    <script src="../assets/javascript/main.js" defer></script>
 </body>
 
 </html>

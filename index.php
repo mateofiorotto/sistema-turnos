@@ -65,20 +65,10 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/javascript/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="assets/javascript/calendario.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-    flatpickr("#fecha_turno", {
-        enableTime: true, // Habilita la selección de la hora
-        dateFormat: "Y-m-d H:i", // Formato de fecha y hora
-        minDate: "today", // Deshabilita fechas anteriores a hoy
-        disable: [
-            // Opcional: aquí podrías agregar días u horarios deshabilitados
-        ]
-    });
-    </script>
     <title><?= $secciones_validas[$vista]['titulo'] ?></title>
 </head>
 
@@ -96,14 +86,12 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
                 <div class="collapse navbar-collapse" id="navbarNav">
 
                     <ul class="navbar-nav mx-auto gap-4 align-middle justify-content-center align-items-center">
-                        <li><a class="navbar-brand" href="#">Navbar</a></li>
+                        <li><a class="navbar-brand" href="index.php?seccion=inicio">Navbar</a></li>
                         <li class="nav-item">
-                            <a class="<?php if ($secciones_validas[$vista]['titulo'] == 'inicio') {
-                                            echo "inicio";
-                                        } ?>nav-link active" aria-current="page" href="index.php?seccion=inicio">Inicio</a>
+                            <a class="nav-link active" aria-current="page" href="index.php?seccion=inicio"><i class="me-2 fa-solid fa-home"><span>Icono Inicio</span></i>Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?seccion=turnos">Turnos</a>
+                            <a class="nav-link" href="index.php?seccion=turnos"><i class="me-2 fa-solid fa-calendar-days"><span>Icono Turnos</span></i>Turnos</a>
                         </li>
                             <?php
                                 if ($userData) {
@@ -148,6 +136,31 @@ $userData = $_SESSION['loggedIn'] ?? FALSE;
     <footer class="">
         <p>footer</p>
     </footer>
+    <script> 
+        // Configuración de flatpickr
+flatpickr("#fecha_turno", {
+    enableTime: true, // Habilita la selección de la hora
+    dateFormat: "Y-m-d H:i", // Formato de fecha y hora
+    minDate: "today", // Deshabilita fechas anteriores a hoy
+    disable: [
+        deshabilitarFeriadosYFinesDeSemana // Deshabilita fines de semana y feriados
+    ],
+    // Deshabilita horas fuera del rango de 9 AM a 6 PM
+    onChange: function(selectedDates, dateStr, instance) {
+        // Obtén la hora seleccionada
+        const selectedHour = selectedDates[0].getHours();
+
+        // Si la hora es menor a 9 AM o mayor o igual a 6 PM, deshabilita la selección
+        if (selectedHour < 9 || selectedHour >= 18) {
+            // Deshabilita la hora seleccionada
+            instance.clear(); // Borra la selección
+            alert("Solo se pueden reservar turnos entre las 9 AM y 6 PM.");
+        }
+    }
+});
+
+    </script>
+     <script src="assets/javascript/main.js" defer></script>
 </body>
 
 </html>

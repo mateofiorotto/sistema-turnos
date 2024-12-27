@@ -8,12 +8,12 @@
     <form method="POST" action="actions/auth_login.php" class="form row justify-content-center align-items-center p-4">
         <div class="form-group col-7">
             <label class="fw-bold" for="nombre_usuario">Nombre de Usuario</label>
-            <input required type="text" name="nombre_usuario" id="nombre_usuario" class="form-control">
+            <input require type="text" name="nombre_usuario" id="nombre_usuario" class="form-control">
         </div>
 
         <div class="form-group col-7">
             <label class="fw-bold" for="contrasena">Contraseña</label>
-            <input required type="password" name="contrasena" id="contrasena" class="form-control">
+            <input require type="password" name="contrasena" id="contrasena" class="form-control">
         </div>
 
         <div class="col-12 text-center">

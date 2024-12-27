@@ -11,7 +11,13 @@ $feriados = [
 ];
 
 $fecha_turno = $postData['fecha_turno'] . ':00';
-$fecha = new DateTime($fecha_turno);
+
+if ($fecha_turno == ':00' OR $fecha_turno == '') {
+    Alerta::anadir_alerta('danger', "La fecha del turno no es válida. Por favor, revisa la selección.");
+    header('Location: ../../index.php?seccion=turnos');
+} else {
+    $timezone = new DateTimeZone('America/Argentina/Buenos_Aires');
+    $fecha = new DateTime($fecha_turno, $timezone);
 
 // Verificar si es fin de semana
 if ($fecha->format('N') >= 6) {
@@ -27,7 +33,7 @@ if ($fecha->format('N') >= 6) {
             Alerta::anadir_alerta('danger', "No se puede hacer un turno en un feriado.");
         } else {
             // Verificar si ya existe un turno en la misma fecha y hora
-            if (Turno::comprobarTurno($fecha_turno)) {
+            if (Turno::comprobar_turno($fecha_turno)) {
                 // Si ya existe un turno en esa fecha y hora, mostrar alerta
                 Alerta::anadir_alerta('danger', "Ya existe un turno reservado en esa fecha y hora. Por favor, selecciona otra.");
             } else {
@@ -36,7 +42,7 @@ if ($fecha->format('N') >= 6) {
                     Turno::insert(
                         $userId,
                         $fecha_turno,
-                        gmdate("Y-m-d H:i:s")
+                        (new DateTime('now', new DateTimeZone('America/Argentina/Buenos_Aires')))->format("Y-m-d H:i:s"),
                     );
                     Alerta::anadir_alerta('success', "Tu turno fue solicitado. Recibirás un recordatorio por Whatsapp antes del mismo.");
                 } catch (Exception $e) {
@@ -49,6 +55,7 @@ if ($fecha->format('N') >= 6) {
         // Si la hora no está en el rango válido
         Alerta::anadir_alerta('danger', "El horario seleccionado no es válido. Solo se pueden reservar turnos entre las 9 AM y 6 PM.");
     }
+}
 }
 
 // Redirigir a la página de turnos después de la validación
